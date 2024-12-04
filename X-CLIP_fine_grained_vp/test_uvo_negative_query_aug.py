@@ -137,24 +137,6 @@ device = next(model.parameters()).device # 与model保持一致
 #######################################
 
 # load video feature
-# frame_feature_path = 'X-CLIP-feats/XCLIP_features/msrvtt3k/xclip_msrvtt3k_frame_feat.jsonl'
-# frame_feature_path = 'X-CLIP-feats/XCLIP_features/msrvtt1k/xclip_msrvtt1k_frame_feat.jsonl'
-# feat_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_aug_bs64_16_ep4_vis_feat.pkl'
-# mask_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_aug_bs64_16_ep4_mask.pkl'
-# feat_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_splitcol0.2_aug_bs64_16_ep4_vis_feat.pkl'
-# mask_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_splitcol0.2_aug_bs64_16_ep4_mask.pkl'
-# feat_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_bs128_margin0.2_w0.1_triplet_ep2_vis_feat.pkl'
-# mask_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_bs128_margin0.2_w0.1_triplet_ep2_mask.pkl'
-# feat_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_splitcol0.1_aug_bs64_16_noconcat_16_ep4_vis_feat.pkl'
-# mask_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_splitcol0.1_aug_bs64_16_noconcat_16_ep4_mask.pkl'
-# mask_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_bs128_margin0.2_w0.2_triplet_ep5_mask.pkl'
-# feat_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_bs128_margin0.2_w0.2_triplet_ep5_vis_feat.pkl'
-# feat_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_bs128_margin0.2_w0.2_triplet_ep5_mask.pkl '
-# mask_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_bs128_margin0.2_w0.2_triplet_ep5_vis_feat.pkl'
-# feat_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_maxcolw0.1_bs64_16neg_ep4_vis_feat.pkl'
-# mask_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_maxcolw0.1_bs64_16neg_ep4_mask.pkl'
-# feat_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_bs128_margin0.2_w001_boundary_ep2_vis_feat.pkl'
-# mask_p= '/var/scratch/achen/VisualSearch/vln_uvo/xclip_feats/xclip_vlnuvo_bs128_margin0.2_w001_boundary_ep2_mask.pkl'
 
 feat_p= args.visual_path
 mask_p= args.visual_mask_path
@@ -184,8 +166,7 @@ for line in msrvtt_s:
     tt_sent_id = line.split('**#**')[0]
     raw_caps[tt_sent_id]=' '.join(line.split('**#**')[1:])
 
-# save_p='/var/scratch/achen/VisualSearch/vln_uvo/xclip_vlnuvo_maxcolw0.1_bs64_16neg_ep4/'
-# save_p='/var/scratch/achen/VisualSearch/vln_uvo/xclip_vlnuvo_bs128_margin0.2_w001_boundary_ep2/'
+
 save_p=args.save_dir
 if not os.path.exists(save_p):
         os.mkdir(save_p)
