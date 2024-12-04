@@ -1,0 +1,113 @@
+job_name="xclip_vlnuvo_maxcol_w_p_w0.2_bs64_16neg_lr_1e3"
+DATA_PATH="/var/scratch/achen/VisualSearch/vln_uvo"
+CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --nproc_per_node=1  --use-env --master_port 29532 \
+    aug_xclip.py --do_train --num_thread_reader=1 \
+    --lr 1e-4 --batch_size=64  --batch_size_val 40 \
+    --epochs=5  --n_display=10 \
+    --data_path ${DATA_PATH} \
+    --features_path ${DATA_PATH}/VideoData \
+    --output_dir ckpts_dsw/${job_name} \
+    --max_words 32 --max_frames 12 \
+    --datatype vlnuvo \
+    --feature_framerate 1 --coef_lr 1e-3 \
+    --freeze_layer_num 0  --slice_framepos 2 \
+    --loose_type --linear_patch 2d --sim_header seqTransf \
+    --loss_func maxcol_word \
+    --pretrained_clip_name ViT-B/32 \
+    # --init_model /home/achen/github/X-CLIP_ag_triplet/ckpts_dsw/xclip_vln_uvo_vit32_bs128/pytorch_model.bin.1
+
+
+
+# # #extracte feature
+## try save retrieval results
+# job_name="xclip_vlnuvo_maxcolw0.2_bs64_16neg"
+# job_name='xclip_vlnuvo_maxcolw0.2_bs64_16neg'
+job_name="xclip_vlnuvo_maxcol_w_p_w0.2_bs64_16neg_lr_1e3"
+DATA_PATH="/var/scratch/achen/VisualSearch/vln_uvo"
+CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --nproc_per_node=1 --use-env  --master_port 29523 \
+    exFeat_xclip.py --do_eval --num_thread_reader=8 \
+    --lr 1e-4 --batch_size=8  --batch_size_val 40 \
+    --epochs=5  --n_display=10 \
+    --data_path ${DATA_PATH} \
+    --features_path ${DATA_PATH}/VideoData \
+    --output_dir ckpts_dsw/${job_name} \
+    --max_words 32 --max_frames 12 \
+    --datatype vlnuvo \
+    --feature_framerate 1 --coef_lr 1e-3 \
+    --freeze_layer_num 0  --slice_framepos 2 \
+    --loose_type --linear_patch 2d --sim_header seqTransf \
+    --pretrained_clip_name ViT-B/32 \
+    --save_feat_name ${job_name}_ep5 \
+    --save_feat_dir ${DATA_PATH}/xclip_feats_test20240105 \
+    --init_model /home/achen/github/X-CLIP_ag_triplet_vpt/ckpts_dsw/${job_name}/pytorch_model.bin.4
+
+
+# # # #test 4 pos
+# job_name="xclip_vlnuvo_maxcolw0.2_bs64_16neg"
+job_name="xclip_vlnuvo_maxcol_w_p_w0.2_bs64_16neg_lr_1e3"
+DATA_PATH="/var/scratch/achen/VisualSearch/vln_uvo"
+CUDA_VISIBLE_DEVICES=0 python test_uvo_negative_query_aug.py --save_dir ${DATA_PATH}/${job_name}_ep5 \
+--visual_path ${DATA_PATH}/xclip_feats_test20240105/${job_name}_ep5_vis_feat.pkl \
+--visual_mask_path ${DATA_PATH}/xclip_feats_test20240105/${job_name}_ep5_mask.pkl \
+--test_model /home/achen/github/X-CLIP_ag_triplet_vpt/ckpts_dsw/${job_name}/pytorch_model.bin.4
+
+
+
+
+
+
+# # job_name="xclip_bs128_ep2_vlnuvo_maxcol_word_w0.2_bs64_16neg_lr_1e4"
+# # DATA_PATH="/var/scratch/achen/VisualSearch/vln_uvo"
+# # CUDA_VISIBLE_DEVICES=2 python -m torch.distributed.launch --nproc_per_node=1  --use-env --master_port 29512 \
+# #     aug_xclip.py --do_train --num_thread_reader=1 \
+# #     --lr 1e-4 --batch_size=64  --batch_size_val 40 \
+# #     --epochs=5  --n_display=10 \
+# #     --data_path ${DATA_PATH} \
+# #     --features_path ${DATA_PATH}/VideoData \
+# #     --output_dir ckpts_dsw/${job_name} \
+# #     --max_words 32 --max_frames 12 \
+# #     --datatype vlnuvo \
+# #     --feature_framerate 1 --coef_lr 1e-4 \
+# #     --freeze_layer_num 0  --slice_framepos 2 \
+# #     --loose_type --linear_patch 2d --sim_header seqTransf \
+# #     --loss_func maxcol_word \
+# #     --pretrained_clip_name ViT-B/32 \
+# #     --init_model /home/achen/github/X-CLIP_ag_triplet/ckpts_dsw/xclip_vln_uvo_vit32_bs128/pytorch_model.bin.1
+
+
+
+# # # #extracte feature
+# ## try save retrieval results
+# # job_name="xclip_vlnuvo_maxcolw0.2_bs64_16neg"
+# # job_name='xclip_vlnuvo_maxcolw0.2_bs64_16neg'
+# job_name="xclip_bs128_ep2_vlnuvo_maxcol_word_w0.2_bs64_16neg_lr_1e4"
+# DATA_PATH="/var/scratch/achen/VisualSearch/vln_uvo"
+# CUDA_VISIBLE_DEVICES=2 python -m torch.distributed.launch --nproc_per_node=1 --use-env  --master_port 29512 \
+#     exFeat_xclip.py --do_eval --num_thread_reader=8 \
+#     --lr 1e-4 --batch_size=8  --batch_size_val 40 \
+#     --epochs=5  --n_display=10 \
+#     --data_path ${DATA_PATH} \
+#     --features_path ${DATA_PATH}/VideoData \
+#     --output_dir ckpts_dsw/${job_name} \
+#     --max_words 32 --max_frames 12 \
+#     --datatype vlnuvo \
+#     --feature_framerate 1 --coef_lr 1e-3 \
+#     --freeze_layer_num 0  --slice_framepos 2 \
+#     --loose_type --linear_patch 2d --sim_header seqTransf \
+#     --pretrained_clip_name ViT-B/32 \
+#     --save_feat_name ${job_name}_ep1 \
+#     --save_feat_dir ${DATA_PATH}/xclip_feats_test20240105 \
+#     --init_model /home/achen/github/X-CLIP_ag_triplet_vpt/ckpts_dsw/${job_name}/pytorch_model.bin.0
+
+
+# # # # #test 4 pos
+# # job_name="xclip_vlnuvo_maxcolw0.2_bs64_16neg"
+# job_name="xclip_bs128_ep2_vlnuvo_maxcol_word_w0.2_bs64_16neg_lr_1e4"
+# DATA_PATH="/var/scratch/achen/VisualSearch/vln_uvo"
+# CUDA_VISIBLE_DEVICES=0 python test_uvo_negative_query_aug.py --save_dir ${DATA_PATH}/${job_name} \
+# --visual_path ${DATA_PATH}/xclip_feats_test20240105/${job_name}_ep1_vis_feat.pkl \
+# --visual_mask_path ${DATA_PATH}/xclip_feats_test20240105/${job_name}_ep1_mask.pkl \
+# --test_model /home/achen/github/X-CLIP_ag_triplet_vpt/ckpts_dsw/${job_name}/pytorch_model.bin.0
+
+
+
