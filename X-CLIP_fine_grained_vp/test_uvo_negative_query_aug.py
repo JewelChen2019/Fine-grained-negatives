@@ -191,14 +191,8 @@ if not os.path.exists(save_p):
         os.mkdir(save_p)
 
 changeS_P = '/data1/caz/github/accv24/vln_uvo/hardnegative/'
-# test_list =['oops_val_ChangeNum_RE10_20230808.json','oops_val_ChangeADP_RE10_20230808.json','oops_val_ChangeVP_RE10_20230808.json','oops_val_ChangeVerb_RE10_20230808.json','oops_val_ChangeNP_RE10_20230808.json','oops_val_ChangeNoun_RE10_20230808.json']
-# test_list =['uvo_val_ChangeADP_RE20_20230920.json','uvo_val_ChangeVP_RE20_20230920.json','uvo_val_ChangeVerb_RE20_20230920.json','uvo_val_ChangeNP_RE20_20230920.json','uvo_val_ChangeNoun_RE20_20230920.json']
-test_list =['uvo_val_ChangeADP_RE20_20230920.json','uvo_val_ChangeVP_RE20_20230920.json','uvo_val_ChangeVerb_RE20_20230920.json','uvo_val_ChangeNP_RE20_20230920.json','uvo_val_ChangeNoun_RE20_20230920.json']
-# test_list=['uvo_val_ChangeNP_RE20_20230920.json']
-# test_list =['uvo_val_ChangeVP_RE20_20230920_RE20_Coarse20_20231114.json','uvo_val_ChangeNP_RE20_20230920_RE20_Coarse20_20231114.json']
-# test_list =['uvo_val_ChangeVP_RE20_20230920_RE20_Coarse20_20231114.json']
-# test_list=['uvo_val_ChangeVP_RE20_20230920_RE20_Coarse40_20240110.json']
-# test_list=['uvo_val_ChangeVP_RE20_20230920_RE20_Coarse60_20240110.json']
+test_list =['uvo_val_adverb_RE20.json','uvo_val_preposition_RE20.json','uvo_val_adjective_RE20.json','uvo_val_verb_RE20.json','uvo_val_noun_RE20.json']
+
 import numpy
 from tqdm import tqdm
 import torch
